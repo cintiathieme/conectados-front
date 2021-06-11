@@ -8,10 +8,10 @@ import Box from '@material-ui/core/Box';
 import { makeStyles } from  '@material-ui/core/styles';
 
 const postsTest = [
-    {id: 1, name: 'post1'},
-    {id:2, name: 'post2'},
-    {id: 3, name: 'post3'},
-    {id: 4, name: 'post4'},
+    {_id: 1, name: 'post1'},
+    {_id: 2, name: 'post2'},
+    {_id: 3, name: 'post3'},
+    {_id: 4, name: 'post4'},
 ];
 
 const useStyles = makeStyles({
@@ -29,14 +29,15 @@ const Home = () => {
 
     return (
         <>
-            <GeneralTemplate />
-            <Header />
-            <Container maxWidth="lg">
-            <Box display="flex" justifyContent="center">
-                <FilterBar />
-                <PostCard posts={postsTest} />
-            </Box>
-            </Container>
+            <GeneralTemplate>
+                <Header />
+                <Container maxWidth="lg">
+                    <Box display="flex" justifyContent="center">
+                        <FilterBar />
+                        <PostCard posts={postsTest} />
+                    </Box>
+                </Container>
+            </GeneralTemplate>
         </>
     )
 };

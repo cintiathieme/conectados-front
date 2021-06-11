@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: 30,
-       
+        backgroundColor: '#00b8d4',        
     },
     
 }));
@@ -46,10 +48,12 @@ return (
                             Juntos por um mundo melhor
                         </Typography>
                         <Typography variant="h5" color="inherit" paragraph>
-                            Encontre a forma de ajudar que mais se adequa a você 
+                            Conecte-se com instuições que precisam da sua ajuda
                         </Typography>
-                        <Button className={classes.button} variant="contained" color="primary" href="#contained-buttons">
-                           Seja um voluntario
+                        <Button className={classes.button} variant="outlined" color="primary">
+                            <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold'}}>
+                                Seja um voluntario
+                            </Link>
                         </Button>                        
                     </div>
                 </Grid>

@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import postCardImage from '../../../images/Trabalho-Voluntário.jpg';
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
-import Link from '@material-ui/core/Link';
-import postCardImage from '../../../images/Trabalho-Voluntário.jpg';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -54,7 +55,7 @@ const PostCard = ({ posts }) => {
                 </Typography>
               </Grid>
               <Grid item>
-              <Link href="#">
+              <Link to={`/${post._id}`}>
                 Saiba mais
               </Link>
               </Grid>
