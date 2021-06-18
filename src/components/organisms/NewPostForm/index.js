@@ -1,0 +1,119 @@
+import React from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import TextField from '@material-ui/core/TextField';
+import Grid from '@material-ui/core/Grid';
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
+
+
+const useStyles = makeStyles((theme) => ({
+  paper: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },  
+  form: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(3),
+  },
+  submit: {
+    margin: theme.spacing(3, 0, 2),
+  },
+}));
+
+const formSchema = Yup.object().shape({
+    image: Yup.string().trim(),
+    description: Yup.string().required('Campo obrigatório'),
+    job: Yup.string().required('Campo obrigatório'),
+});
+
+
+const NewPostForm = ({ handleCreatePost }) => {
+    const classes = useStyles();
+
+    const formik = useFormik({
+      initialValues: {
+        image: '',
+        description: '',
+        job: '',           
+      },
+      onSubmit: values => {
+        handleCreatePost(values);
+      },
+      validationSchema: formSchema,
+    });
+   
+
+    return (
+      <Container component="main" maxWidth="xs">
+        <CssBaseline />
+        <div className={classes.paper}>          
+          <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField                  
+                  name="image"
+                  variant="outlined"                  
+                  fullWidth
+                  id="outilined-multiline-flexible"
+                  label="Imagem"
+                  type="file"
+                  InputLabelProps={{ shrink: true }}
+                  value={formik.values.image}                  
+                  onChange={formik.handleChange}                  
+                  error={formik.touched.image && Boolean(formik.errors.image)}
+                  helperText={formik.touched.image && formik.errors.image}
+                />
+              </Grid>       
+              
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"                  
+                  fullWidth
+                  name="job"
+                  label="Vaga"
+                  type="job"
+                  id="job"
+                  value={formik.values.job}
+                  onChange={formik.handleChange}                  
+                  error={formik.touched.job && Boolean(formik.errors.job)}
+                  helperText={formik.touched.job && formik.errors.job}                  
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"                  
+                  fullWidth
+                  id="description"
+                  label="Descrição do trabalho"
+                  name="description"
+                  rows={4}
+                  multiline
+                  value={formik.values.description}
+                  onChange={formik.handleChange}                  
+                  error={formik.touched.description && Boolean(formik.errors.description)}
+                  helperText={formik.touched.description && formik.errors.description}
+                />
+              </Grid>               
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Enviar
+            </Button>            
+          </form>
+        </div>        
+      </Container>
+    );
+}; 
+
+export default NewPostForm;

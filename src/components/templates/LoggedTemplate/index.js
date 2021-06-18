@@ -6,27 +6,28 @@ import Footer from '../../molecules/Footer';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+import MailIcon from '@material-ui/icons/Mail';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
-const useStyle = makeStyles({
+const useStyle = makeStyles({   
     toolBar: {
         display: 'flex',
         justifyContent: 'space-between',
         padding: '0 30',
-        backgroundColor: '#00b8d4',
+        backgroundColor: '#00b8d4',             
      
-    },       
+    },
+    mailIcon: {
+        margin: '0 30px',
+    },    
     user: {
         display: 'flex',
         alignItems: 'center',
-    },
-    accountCircle: {
-        marginLeft: '30px',
-    }    
+    },    
 });
 
-const GeneralTemplate = ({ children }) => {
+const LoggedTemplate = ({ children }) => {
     const classes = useStyle();
 
     return (
@@ -34,12 +35,14 @@ const GeneralTemplate = ({ children }) => {
             <AppBar position="sticky">
                 <Toolbar className={classes.toolBar}>
                     <div>
-                        <h3><Link to="/" style={{ textDecoration: 'none', color: 'white', fontSize: '20px', fontWeight: 'bold'}}>Conectados</Link></h3>
+                        <h3><Link to="/posts" style={{ textDecoration: 'none', color: 'white', fontSize: '20px', fontWeight: 'bold'}}>Conectados</Link></h3>
                     </div>
-                    <div className={classes.user}>                         
-                        <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontSize: '16px', fontWeight: 'bold'}}>Cadastre sua Instuição</Link>                       
+                    <div className={classes.user}>
+                        <Link to="/messages" style={{ textDecoration: 'none', color: 'white'}}>
+                            <MailIcon className={classes.mailIcon} />
+                        </Link>                        
                         <Link to="/signin" style={{ textDecoration: 'none', color: 'white'}}>
-                            <AccountCircle className={classes.accountCircle}/>
+                            <ExitToAppIcon />
                         </Link>                       
                     </div>
                 </Toolbar>
@@ -50,4 +53,4 @@ const GeneralTemplate = ({ children }) => {
     )
 }
 
-export default GeneralTemplate;
+export default LoggedTemplate;

@@ -6,7 +6,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import image from '../../../images/trabalho-voluntario.jpg';
+// import image from '../../../images/trabalho-voluntario.jpg';
 
 const useStyles = makeStyles((theme) => ({
     mainFeaturedPost: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.common.white,
       marginBottom: theme.spacing(4),
       paddingRight: 100,
-      backgroundImage: 'url(https://s3.amazonaws.com/ibc-portal/wp-content/uploads/2016/09/23141940/trabalho-voluntario.jpg)',
+      backgroundImage: 'url(/images/trabalho-voluntario.jpg)',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
@@ -48,7 +48,7 @@ return (
                             Juntos por um mundo melhor
                         </Typography>
                         <Typography variant="h5" color="inherit" paragraph>
-                            Conecte-se com instuições que precisam da sua ajuda
+                            Conecte-se com instituições que precisam da sua ajuda
                         </Typography>
                         <Button className={classes.button} variant="outlined" color="primary">
                             <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold'}}>

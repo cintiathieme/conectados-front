@@ -1,6 +1,9 @@
 import React from 'react';
-import GeneralTemplate from '../../components/templates/GeneralTemplate';
-import postCardImage from '../../images/Trabalho-Voluntário.jpg';
+
+import apiService from '../../services/api.services'
+
+import LoggedTemplate from '../../components/templates/LoggedTemplate';
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -14,24 +17,17 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Box from '@material-ui/core/Box';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+import Button from '@material-ui/core/Button';
 
-const postsList = [
-    {_id: "1", name: 'post1'},
-    {_id: "2", name: 'post2'},
-    {_id: "3", name: 'post3'},
-    {_id: "4", name: 'post4'},
-];
 
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(2),
-        maxWidth: 345,    
+        maxWidth: 345,
+        marginTop: 30,    
     },
     media: {
         height: 0,
@@ -53,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
     textArea: {
         width: 300,
     },
+    submit: {
+        margin: theme.spacing(3, 0, 2),
+      },
 }));
 
 const PostDetail = props => {
@@ -65,16 +64,33 @@ const PostDetail = props => {
         setExpanded(!expanded);
     };
 
+    const getPostDetail = async () => {
+        try {
+            const post = await apiService.getPostDetail(props.match.params.id);
+
+            setPost(post);
+        } catch (error) {
+            console.log(error);
+        }
+    };    
 
     React.useEffect(() => {
-        const foundPost = postsList.find(post => {
-            return post._id === props.match.params.id
-        });
+       getPostDetail();
+    }, []);
+
+    // const handleCreateMessage = async values => {
+    //     try {
+    //       console.log(values);
+    //       await apiService.sendMessage(values);
+          
+    //       props.history.push('/posts')
+    //     } catch (error) {
+    //     console.log(error);
+    //     }
         
-        setPost(foundPost)
-    })
+   
     return (
-        <GeneralTemplate>
+        <LoggedTemplate>
         <Box display="flex" justifyContent="center">
              <Card className={classes.root}>
                 <CardHeader
@@ -83,13 +99,13 @@ const PostDetail = props => {
                         R
                     </Avatar>
                     }                    
-                    title={post.name}
+                    title={post._id}
                     subheader="September 14, 2016"
                 />
                 <CardMedia
                     className={classes.media}
-                    image={postCardImage}
-                    title="Paella dish"
+                    image={post.image}
+                    title={post.institution}
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -97,12 +113,9 @@ const PostDetail = props => {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="share">
-                    <ShareIcon />
-                    </IconButton>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        Quero me conectar
+                    </Typography>
                 
                 <IconButton
           className={clsx(classes.expand, {
@@ -120,11 +133,20 @@ const PostDetail = props => {
         <Typography variant="body2" color="textSecondary" component="p">
           <TextareaAutosize aria-label="minimum height" className={classes.textArea}rowsMin={10} placeholder="Descreva suas habilidades e disponibilidade de horários" />
           </Typography>
+          <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+            >
+              Enviar
+            </Button>            
         </CardContent>
       </Collapse>
             </Card> 
             </Box>       
-        </GeneralTemplate>
+        </LoggedTemplate>
 
     )
 };

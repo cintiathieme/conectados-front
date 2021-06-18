@@ -1,8 +1,13 @@
 import React from 'react';
-
-import apiService from '../../../services/api.services';
+import apiServices from '../../services/api.services';
 
 import { Link } from 'react-router-dom';
+
+import LoggedTemplate from '../../components/templates/LoggedTemplate';
+import FilterBar from '../../components/organisms/FilterBar';
+
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -30,27 +35,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostCard = () => {
-  const classes = useStyles();
+
+const Posts = () => {   
+    const classes = useStyles();
   
-  const [posts, setPosts] = React.useState([]);
-
-  const getPosts = async () => {
-    try {
-      const posts = await apiService.getPosts();
-
-      setPosts(posts);
-    } catch(error) {
-      console.log(error)
-    }
-  };
-
-  React.useEffect(() => {
-    getPosts();
-  }, []);
-
-  return (
-    <div>
+    const [posts, setPosts] = React.useState([]);
+  
+    const getPosts = async () => {
+      try {
+        const posts = await apiServices.getPosts();
+  
+        setPosts(posts);
+      } catch(error) {
+        console.log(error)
+      }
+    };
+  
+    React.useEffect(() => {
+      getPosts();
+    }, []);   
+    return (
+        <>
+            <LoggedTemplate>
+                
+                <Container maxWidth="lg">
+                    <Box display="flex" justifyContent="center">
+                        <FilterBar />
+                        <div>
     {posts.map(post => (    
     <Paper className={classes.paper} key={post._id}>
         <Grid container >
@@ -73,7 +84,7 @@ const PostCard = () => {
                 </Typography>
               </Grid>
               <Grid item>
-              <Link to={`/${post._id}`}>
+              <Link to={`/posts/${post._id}`}>
                 Saiba mais
               </Link>
               </Grid>
@@ -86,8 +97,11 @@ const PostCard = () => {
       </Paper> 
     ))}
     </div>
- 
-  );
+                    </Box>
+                </Container>
+            </LoggedTemplate>
+        </>
+    )
 };
 
-export default PostCard;
+export default Posts;
