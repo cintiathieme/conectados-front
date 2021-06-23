@@ -15,7 +15,6 @@ import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Box from '@material-ui/core/Box';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
@@ -25,16 +24,13 @@ import Button from '@material-ui/core/Button';
 const useStyles = makeStyles((theme) => ({
     root: {
         padding: theme.spacing(2),
-        maxWidth: 345,
+        width: 400,
         marginTop: 30,    
     },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
-    },
-    avatar: {
-        backgroundColor: red[500],
-    },
+    },    
     expand: {
         transform: 'rotate(0deg)',
         marginLeft: 'auto',
@@ -66,8 +62,7 @@ const PostDetail = props => {
     const getPostDetail = async () => {
         try {
             const post = await apiService.getPostDetail(props.match.params.id);
-            console.log(post)
-
+            
             setPost(post);
         } catch (error) {
             console.log(error);
@@ -104,17 +99,20 @@ const PostDetail = props => {
         <Box display="flex" justifyContent="center">
              <Card className={classes.root}>
                 <CardHeader                              
-                    title={post.institutionName}
-                    subheader={post.updatedAt}
+                    title={post.job}
+                    subheader={post.institutionName}
                 />
                 <CardMedia
                     className={classes.media}
                     image={post.image}
-                    title={post.institution}
+                    title={post.institutionName}
                 />
                 <CardContent>
                     <Typography variant="body2" color="textSecondary" component="p">
-                    Decrição: Procura-se volutário para ajudar na distribuição de alimentos. 
+                    Descrição: {post.description} 
+                    </Typography>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {post.updateAt} 
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>

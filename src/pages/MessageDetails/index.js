@@ -12,6 +12,7 @@ import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Button from '@material-ui/core/Button';
+import Box from '@material-ui/core/Box';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -21,15 +22,21 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(5),       
     },
     title: {
-        backgroundColor: '#00A170'
+        backgroundColor: '#4791db',
+        height: theme.spacing(5),
+        display: 'flex',
+        alignItems: 'center',
+        color: '#FFFFFF',
+        paddingLeft: theme.spacing(2)
+
     },
     messageArea : {
-        margin: theme.spacing(3)
+        margin: theme.spacing(3),        
     },    
     paper: {
         width: theme.spacing(40),
         marginTop: theme.spacing(2),
-        backgroundColor: '#F5F5F5'
+        padding: theme.spacing(2)               
     },
     formArea: {
         margin: theme.spacing(3)
@@ -52,14 +59,18 @@ const MessageDetails = props => {
     const classes = useStyles();    
     const [message, setMessage] = React.useState({});
     const [messageCollection, setmessageCollection] = React.useState([]);
+    const [user, setUser] = React.useState('');
 
     const getMessageDetail = async () => {
         try {
             const message = await apiService.getMessageDetail(props.match.params.id); 
             const messageCollection = await message.messageCollection;
+            const user = await apiService.getUser()
+            const userId = user._id;           
 
             setMessage(message);
             setmessageCollection(messageCollection);
+            setUser(userId); 
         } catch (error) {
             console.log(error);
         }
@@ -70,11 +81,10 @@ const MessageDetails = props => {
     }, []);
     
     const handleAddMessage = async values => {
-        try {
-          console.log(values);
+        try {          
           await apiService.addMessages(props.match.params.id, values);
           
-          props.history.push('/')
+          props.history.push('/messages')
         } catch (error) {
         console.log(error);
         }
@@ -87,8 +97,7 @@ const MessageDetails = props => {
         onSubmit: values => {
             handleAddMessage(values);
         },        
-        });
-    
+        });  
         
     return (
         <GeneralTemplate>
@@ -97,11 +106,15 @@ const MessageDetails = props => {
             <Container maxWidth="sm">
                 <Typography component="div" className={classes.root}>
                 <div className={classes.title}>
-                    <Typography variant="overline" >{message.volunteerName}</Typography>
+                    <Typography variant="h6" >{user === message.volunteer ? message.institutionName : message.volunteerName} </Typography>
                 </div>
                 <div className={classes.messageArea}>
                     <Typography component="div">{messageCollection.map(m => (
-                        <Paper key={m._id} elevation={3} className={classes.paper}>{m.message}</Paper>))}
+                        <Box display="flex" style={{justifyContent: user === m.author ? 'flex-end' : 'flex-start'}}>
+                            <Paper key={m._id} elevation={3} className={classes.paper} style={{backgroundColor: user === m.author ? '#DCF8C6' : '#FFF'}}>
+                                <Typography >{m.message}</Typography>
+                            </Paper>
+                        </Box>))}
                     </Typography>
                 </div>
                 <div className={classes.formArea}>

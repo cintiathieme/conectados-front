@@ -58,7 +58,7 @@ const SignupForm = ({ handleCreateUser }) => {
         name: '',
         email: '',
         password: '',
-        type: 'volunteer'      
+        role: 'volunteer'      
       },
       onSubmit: values => {
         handleCreateUser(values);
@@ -71,16 +71,7 @@ const SignupForm = ({ handleCreateUser }) => {
     //   setShowPassword({ showPassword: !showPassword })
     // }
 
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className={classes.paper}>
-          <Avatar className={classes.avatar}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Criar sua conta
-          </Typography>
+    return (     
           <form className={classes.form} noValidate onSubmit={formik.handleSubmit}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -137,8 +128,8 @@ const SignupForm = ({ handleCreateUser }) => {
               <FormControl component="fieldset">
                 <FormLabel component="legend">Selecione:</FormLabel>
                 <RadioGroup value={formik.values.type} onChange={formik.handleChange}>
-                  <FormControlLabel name="type" value="volunteer" control={<Radio />} label="Voluntário" />
-                  <FormControlLabel name="type" value="institution" control={<Radio />} label="Instituição" />                  
+                  <FormControlLabel name="role" value="volunteer" control={<Radio />} label="Voluntário" />
+                  <FormControlLabel name="role" value="institution" control={<Radio />} label="Instituição" />                  
                 </RadioGroup>
               </FormControl>
               </Grid>             
@@ -159,9 +150,7 @@ const SignupForm = ({ handleCreateUser }) => {
                 </Link>
               </Grid>
             </Grid>
-          </form>
-        </div>        
-      </Container>
+          </form>       
     );
 }; 
 

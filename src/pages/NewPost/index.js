@@ -11,7 +11,7 @@ const NewPost = props => {
           console.log(values);
           await apiService.createPost(values);
           
-          props.history.push('/')
+          props.history.push('/posts')
         } catch (error) {
         console.log(error);
         }

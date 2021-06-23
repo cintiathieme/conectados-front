@@ -18,6 +18,7 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/signin" component={Signin} />
+      <Route exact path="/posts" component={Posts} />
       {/* render={(props) => <Signin {...props} updateRole={setRole}/>}/>      */}
       <Route exact path="/messages" component={Message} />
       <Route exact path="/messages/:id" component={MessageDetails} />

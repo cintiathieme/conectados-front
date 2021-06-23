@@ -3,9 +3,13 @@ import React from 'react';
 import apiService from '../../services/api.services';
 
 import SignupForm from '../../components/organisms/SignupForm';
-import Footer from '../../components/molecules/Footer';
+import AuthTemplate from '../../components/templates/AuthTemplate';
+
+import FormHelperText from '@material-ui/core/FormHelperText';
 
 const Signup = props => {
+  const [show, setShow] = React.useState(false); 
+
   const handleCreateUser = async values => {
     try {
       console.log(values);      
@@ -13,15 +17,19 @@ const Signup = props => {
       
       props.history.push('/signin')
     } catch (error) {
-    console.log(error);
+      setShow(true);
     }
   }
 
-  return (
-    <>
+  return (    
+    <AuthTemplate text="Criar sua conta">
+      {show && (
+          <FormHelperText style={{ color: 'red', fontSize: '14px' }}>
+            * Email já cadastrado
+          </FormHelperText>
+      )}
     <SignupForm handleCreateUser={handleCreateUser} />
-    <Footer />
-    </>
+    </AuthTemplate>    
   );
 };
 

@@ -18,10 +18,10 @@ const Signin = props => {
       // props.updateRole(role)
       // localStorage.setItem('role', role)
 
-      props.history.push('/')
+      props.history.push('/posts')
             
     } catch (error) {
-      if (error.response.data.message === 'Credenciais inválidas') {
+      if (error) { 
         setShow(true);
       }
     }

@@ -93,17 +93,20 @@ class ApiService {
     }
 
     signupUser = async userData => {
-        await this.api.post('/auth/signup', userData);
+        const { data } = await this.api.post('/auth/signup', userData);
+
+        return data.message;
     }
 
     signinUser = async userData => {
         const { data } = await this.api.post('/auth/signin', userData);
+        await console.log(data)
 
         return data.message;
     }
 
     getUser = async () => {
-        const { data } = await this.api.get('/auth/userInfos');
+        const { data } = await this.api.get('/post/userInfos');
 
         return data;
     }

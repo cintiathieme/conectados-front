@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -28,6 +27,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  link: {
+    fontSize: '14px',
+    display: 'flex',
+    justifyContent: 'flex-end'
+  }
 }));
 
 const PostCard = () => {
@@ -63,23 +67,22 @@ const PostCard = () => {
             <Grid item xs container direction="column" spacing={2}>
               <Grid item xs>
                 <Typography gutterBottom variant="subtitle1">
-                  {post._id}
+                  {post.institutionName}
                 </Typography>
                 <Typography variant="body2" gutterBottom>
                   {post.job}
                 </Typography>
                 <Typography variant="body2" color="textSecondary">
-                  descrição:
+                  {post.description}
                 </Typography>
               </Grid>
               <Grid item>
-              <Link to={`/${post._id}`}>
+              <Link to={`/posts/${post._id}`} className={classes.link}>
                 Saiba mais
               </Link>
               </Grid>
             </Grid>
-            <Grid item>
-              <StarBorderIcon />
+            <Grid item>             
             </Grid>
           </Grid>
         </Grid>

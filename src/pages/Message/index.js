@@ -31,14 +31,16 @@ const Message = () => {
   const classes = useStyles();  
   
   const [messagesList, setMessageList] = React.useState([]);
-   
+  const [user, setUser] = React.useState(''); 
   
   const getMessages = async () => {
     try {
       const messagesList = await apiService.getMessages();
-      console.log(messagesList)
-
+      const user = await apiService.getUser()
+      const userId = user._id;             
+     
       setMessageList(messagesList);
+      setUser(userId); 
     } catch(error) {
       console.log(error)
     }
@@ -65,10 +67,10 @@ const Message = () => {
                   <TableRow hover key={message._id}>
                     <TableCell component="th" scope="row">
                   <Link to={`/messages/${message._id}`} style={{ textDecoration: 'none'}}>
-                      {message.institutionName}
+                      {user === message.institution ? message.volunteerName : message.institutionName}
                   </Link>
                     </TableCell>
-                    <TableCell align="right">{message.updatedAt}</TableCell>                    
+                    <TableCell align="right">{message.updatedAt.slice(0,10)}</TableCell>                    
                   </TableRow>
                 ))}
               </TableBody>

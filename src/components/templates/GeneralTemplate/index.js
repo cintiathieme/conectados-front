@@ -10,6 +10,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Button from '@material-ui/core/Button';
 
 const useStyle = makeStyles({
     toolBar: {
@@ -39,7 +40,7 @@ const GeneralTemplate = ({ children }) => {
             <AppBar position="sticky">
                 <Toolbar className={classes.toolBar}>
                     <div>
-                        <h3><Link to="/" style={{ textDecoration: 'none', color: 'white', fontSize: '20px', fontWeight: 'bold'}}>Conectados</Link></h3>
+                        <h3><Link to={apiServices.isAuthenticated() ? '/posts' : '/'} style={{ textDecoration: 'none', color: 'white', fontSize: '20px', fontWeight: 'bold'}}>Conectados</Link></h3>
                     </div>
                     <div className={classes.user}>
                         {apiServices.isAuthenticated() ? 
@@ -47,12 +48,12 @@ const GeneralTemplate = ({ children }) => {
                         <Link to="/messages" style={{ textDecoration: 'none', color: 'white'}}>
                              <MailIcon className={classes.mailIcon} />
                         </Link>                                               
-                        <Link to="/signin" style={{ textDecoration: 'none', color: 'white'}}>
+                        <Button style={{color: 'white'}} onClick={() => apiServices.logout()}>
                             <ExitToAppIcon />
-                        </Link>
+                        </Button>
                         </>) :                          
                         (<>
-                            <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontSize: '16px', fontWeight: 'bold'}}>Cadastre sua Instuição</Link>)}                      
+                            <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontSize: '16px', fontWeight: 'bold'}}>Cadastre sua Instuição</Link>                      
                             <Link to="/signin" style={{ textDecoration: 'none', color: 'white'}}>
                                 <AccountCircle className={classes.accountCircle}/>
                             </Link>

@@ -4,7 +4,6 @@ import apiServices from '../../services/api.services';
 
 import GeneralTemplate from '../../components/templates/GeneralTemplate';
 import Header from '../../components/molecules/Header';
-import SideBar from '../../components/organisms/SideBar';
 
 import { Link } from 'react-router-dom';
 
@@ -15,7 +14,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '100%',
     maxHeight: '100%',
   },
+  link: {
+    fontSize: '14px',
+    display: 'flex',
+    justifyContent: 'flex-end'
+  }
 }));
 
 
@@ -44,15 +47,12 @@ const Home = () => {
   const classes = useStyles();
   
   const [posts, setPosts] = React.useState([]);
-  const [user, setUser] = React.useState({});
-
+  
   const home = async () => {
     try {
-      const posts = await apiServices.getPosts();
-      const user = await apiServices.getUser();
+      const posts = await apiServices.home();
 
-      setPosts(posts);
-      setUser(user);      
+      setPosts(posts);        
     } catch(error) {
       console.log(error)
     }
@@ -66,8 +66,7 @@ const Home = () => {
     <GeneralTemplate>
       {!apiServices.isAuthenticated() && <Header />}
       <Container className={classes.container} maxWidth="lg">
-          <Box display="flex" justifyContent="center">
-          {/* {user.role === 'institution' && <SideBar />}                      */}
+          <Box display="flex" justifyContent="center">                          
             <div>
               {posts.map(post => (    
               <Paper className={classes.paper} key={post._id}>
@@ -91,14 +90,11 @@ const Home = () => {
                           </Typography>
                         </Grid>
                         <Grid item>
-                        <Link to={`/posts/${post._id}`}>
+                        <Link  to={`/posts/${post._id}`} className={classes.link}>
                           Saiba mais
                         </Link>
                         </Grid>
-                      </Grid>
-                      <Grid item>
-                        <StarBorderIcon />
-                      </Grid>
+                      </Grid>                      
                     </Grid>
                   </Grid>
                 </Paper> 
