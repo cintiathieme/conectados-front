@@ -4,6 +4,7 @@ import apiServices from '../../services/api.services';
 
 import GeneralTemplate from '../../components/templates/GeneralTemplate';
 import Header from '../../components/molecules/Header';
+import SideBar from '../../components/organisms/SideBar';
 
 import { Link } from 'react-router-dom';
 
@@ -17,6 +18,9 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: theme.spacing(3),
+  },
   paper: {
     padding: theme.spacing(2),
     width: 500,
@@ -37,15 +41,18 @@ const useStyles = makeStyles((theme) => ({
 
 
 const Home = () => {
-    const classes = useStyles();
+  const classes = useStyles();
   
   const [posts, setPosts] = React.useState([]);
+  const [user, setUser] = React.useState({});
 
   const home = async () => {
     try {
-      const posts = await apiServices.home();
+      const posts = await apiServices.getPosts();
+      const user = await apiServices.getUser();
 
       setPosts(posts);
+      setUser(user);      
     } catch(error) {
       console.log(error)
     }
@@ -55,53 +62,52 @@ const Home = () => {
     home();
   }, []);
      
-    return (
-        <>
-            <GeneralTemplate>
-                <Header />
-                <Container maxWidth="lg">
-                    <Box display="flex" justifyContent="center">                        
-                    <div>
-    {posts.map(post => (    
-    <Paper className={classes.paper} key={post._id}>
-        <Grid container >
-          <Grid item>
-            <ButtonBase className={classes.image}>
-              <img className={classes.img} alt="complex" src={post.image} />
-            </ButtonBase>
-          </Grid>
-          <Grid item xs={12} sm container>
-            <Grid item xs container direction="column" spacing={2}>
-              <Grid item xs>
-                <Typography gutterBottom variant="subtitle1">
-                  {post._id}
-                </Typography>
-                <Typography variant="body2" gutterBottom>
-                  {post.job}
-                </Typography>
-                <Typography variant="body2" color="textSecondary">
-                  descrição:
-                </Typography>
-              </Grid>
-              <Grid item>
-              <Link to={`/${post._id}`}>
-                Saiba mais
-              </Link>
-              </Grid>
-            </Grid>
-            <Grid item>
-              <StarBorderIcon />
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper> 
-    ))}
-    </div>
-                    </Box>
-                </Container>
-            </GeneralTemplate>
-        </>
-    )
+  return (
+    <GeneralTemplate>
+      {!apiServices.isAuthenticated() && <Header />}
+      <Container className={classes.container} maxWidth="lg">
+          <Box display="flex" justifyContent="center">
+          {/* {user.role === 'institution' && <SideBar />}                      */}
+            <div>
+              {posts.map(post => (    
+              <Paper className={classes.paper} key={post._id}>
+                  <Grid container >
+                    <Grid item>
+                      <ButtonBase className={classes.image}>
+                        <img className={classes.img} alt="complex" src={post.image} />
+                      </ButtonBase>
+                    </Grid>
+                    <Grid item xs={12} sm container>
+                      <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                          <Typography gutterBottom variant="subtitle1">
+                            {post.institutionName}
+                          </Typography>
+                          <Typography variant="body2" gutterBottom>
+                            {post.job}
+                          </Typography>
+                          <Typography variant="body2" color="textSecondary">
+                            {post.description}
+                          </Typography>
+                        </Grid>
+                        <Grid item>
+                        <Link to={`/posts/${post._id}`}>
+                          Saiba mais
+                        </Link>
+                        </Grid>
+                      </Grid>
+                      <Grid item>
+                        <StarBorderIcon />
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Paper> 
+              ))}
+              </div>
+          </Box>
+      </Container>
+    </GeneralTemplate>        
+  )
 };
 
 export default Home;

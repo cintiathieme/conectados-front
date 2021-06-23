@@ -2,7 +2,7 @@ import React from 'react';
 
 import apiService from '../../services/api.services';
 
-import LoggedTemplate from '../../components/templates/LoggedTemplate';
+import GeneralTemplate from '../../components/templates/GeneralTemplate';
 import NewPostForm from '../../components/organisms/NewPostForm';
 
 const NewPost = props => {
@@ -11,16 +11,16 @@ const NewPost = props => {
           console.log(values);
           await apiService.createPost(values);
           
-          props.history.push('/posts')
+          props.history.push('/')
         } catch (error) {
         console.log(error);
         }
     };   
     
     return (
-        <LoggedTemplate>
+        <GeneralTemplate>
             <NewPostForm handleCreatePost={handleCreatePost} />       
-        </LoggedTemplate>
+        </GeneralTemplate>
     );
 };
 

@@ -21,12 +21,15 @@ class ApiService {
             error => {
                 if(error.response.status === 401 && error.response.data.type === 'Auth') {
                     localStorage.removeItem('token');
+                    // localStorage.removeItem('role');
                     window.location.href='/signin';
                 }
                 return error;
             }   
        );
     }
+
+    isAuthenticated = () => localStorage.getItem('token') !== null;
 
     home = async () => {
         const { data } = await this.api.get('/home');
@@ -52,30 +55,42 @@ class ApiService {
     }
 
     deletePost = async postId => {
+
         await this.api.delete(`/my-posts/${postId}`);
+        
     }
 
-    updatePost = async postId => {
-        const { data } = await this.api.put(`/my-posts/${postId}`)
+    updatePost = async (postId, postData) => {
+        const { data } = await this.api.put(`/my-posts/${postId}`, postData)
 
         return data;
     }
 
     myPosts = async () => {
         const { data } = await this.api.get('/my-posts');
+       
+        return data;
+    }
+
+    sendMessage = async (postId, messageData) => {
+        await this.api.post(`/post/${postId}`, messageData);
+    }
+
+    getMessages = async () => {
+        const { data } = await this.api.get('/message');
 
         return data;
     }
 
-    sendMessage = async messageData => {
-        await this.api.post('/post/postDetail', messageData);
+    addMessages = async (messageId, messageData) => {
+        await this.api.put(`/message/${messageId}`, messageData);
     }
 
-    // getMessages = async () => {
-    //     const { data } = await this.api.get('/messages');
-
-    //     return data;
-    // }
+    getMessageDetail = async messageId => {
+        const { data } = await this.api.get(`/message/${messageId}`);
+        
+        return data;
+    }
 
     signupUser = async userData => {
         await this.api.post('/auth/signup', userData);
@@ -85,6 +100,17 @@ class ApiService {
         const { data } = await this.api.post('/auth/signin', userData);
 
         return data.message;
+    }
+
+    getUser = async () => {
+        const { data } = await this.api.get('/auth/userInfos');
+
+        return data;
+    }
+
+    logout = () => {
+        localStorage.removeItem('token');
+        window.location.href='/';
     }
 }
 

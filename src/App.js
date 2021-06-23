@@ -12,16 +12,18 @@ import MyPosts from './pages/MyPosts';
 import MessageDetails from './pages/MessageDetails';
 
 function App() {
+  // const [role, setRole] = React.useState(localStorage.getItem('role'));
   return (
     <Switch>
       <Route exact path="/" component={Home} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/signin" component={Signin} />
-      <Route exact path="/posts" component={Posts} />
+      {/* render={(props) => <Signin {...props} updateRole={setRole}/>}/>      */}
       <Route exact path="/messages" component={Message} />
       <Route exact path="/messages/:id" component={MessageDetails} />
       <Route exact path="/new-post" component={NewPost} />
       <Route exact path="/my-posts" component={MyPosts} />
+       {/* render={(props) => <MyPosts {...props} role={role}/>} /> */}
       <Route exact path="/posts/:id" component={PostDetails} />
     </Switch>
   );

@@ -2,12 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Footer from '../../molecules/Footer';
 
+import apiServices from '../../../services/api.services';
 
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-
+import MailIcon from '@material-ui/icons/Mail';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 const useStyle = makeStyles({
     toolBar: {
@@ -23,11 +25,14 @@ const useStyle = makeStyles({
     },
     accountCircle: {
         marginLeft: '30px',
-    }    
+    },
+    mailIcon: {
+        margin: '0 30px',
+    },        
 });
 
 const GeneralTemplate = ({ children }) => {
-    const classes = useStyle();
+    const classes = useStyle();    
 
     return (
         <>
@@ -36,11 +41,22 @@ const GeneralTemplate = ({ children }) => {
                     <div>
                         <h3><Link to="/" style={{ textDecoration: 'none', color: 'white', fontSize: '20px', fontWeight: 'bold'}}>Conectados</Link></h3>
                     </div>
-                    <div className={classes.user}>                         
-                        <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontSize: '16px', fontWeight: 'bold'}}>Cadastre sua Instuição</Link>                       
+                    <div className={classes.user}>
+                        {apiServices.isAuthenticated() ? 
+                        (<>
+                        <Link to="/messages" style={{ textDecoration: 'none', color: 'white'}}>
+                             <MailIcon className={classes.mailIcon} />
+                        </Link>                                               
                         <Link to="/signin" style={{ textDecoration: 'none', color: 'white'}}>
-                            <AccountCircle className={classes.accountCircle}/>
-                        </Link>                       
+                            <ExitToAppIcon />
+                        </Link>
+                        </>) :                          
+                        (<>
+                            <Link to="/signup" style={{ textDecoration: 'none', color: 'white', fontSize: '16px', fontWeight: 'bold'}}>Cadastre sua Instuição</Link>)}                      
+                            <Link to="/signin" style={{ textDecoration: 'none', color: 'white'}}>
+                                <AccountCircle className={classes.accountCircle}/>
+                            </Link>
+                        </>)}                       
                     </div>
                 </Toolbar>
             </AppBar>

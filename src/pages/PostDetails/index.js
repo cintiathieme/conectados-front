@@ -1,9 +1,9 @@
 import React from 'react';
+import { useFormik } from 'formik';
 
 import apiService from '../../services/api.services'
 
-import LoggedTemplate from '../../components/templates/LoggedTemplate';
-
+import GeneralTemplate from '../../components/templates/GeneralTemplate';
 
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -13,7 +13,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
@@ -55,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const PostDetail = props => {
-    const classes = useStyles();    
-    const [post, setPost] = React.useState({});
+    const classes = useStyles();
 
+    const [post, setPost] = React.useState({});
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
@@ -67,6 +66,7 @@ const PostDetail = props => {
     const getPostDetail = async () => {
         try {
             const post = await apiService.getPostDetail(props.match.params.id);
+            console.log(post)
 
             setPost(post);
         } catch (error) {
@@ -78,29 +78,34 @@ const PostDetail = props => {
        getPostDetail();
     }, []);
 
-    // const handleCreateMessage = async values => {
-    //     try {
-    //       console.log(values);
-    //       await apiService.sendMessage(values);
+    const handleCreateMessage = async values => {
+        try {
+          console.log(values);
+          await apiService.sendMessage(props.match.params.id, values);
           
-    //       props.history.push('/posts')
-    //     } catch (error) {
-    //     console.log(error);
-    //     }
-        
+          props.history.push('/posts')
+        } catch (error) {
+        console.log(error);
+        }
+        };
+
+    const formik = useFormik({
+        initialValues: {
+            messageCollection: ''         
+        },
+        onSubmit: values => {
+            handleCreateMessage(values);
+        },        
+        });
+    
    
     return (
-        <LoggedTemplate>
+        <GeneralTemplate>
         <Box display="flex" justifyContent="center">
              <Card className={classes.root}>
-                <CardHeader
-                    avatar={
-                    <Avatar aria-label="recipe" className={classes.avatar}>
-                        R
-                    </Avatar>
-                    }                    
-                    title={post._id}
-                    subheader="September 14, 2016"
+                <CardHeader                              
+                    title={post.institutionName}
+                    subheader={post.updatedAt}
                 />
                 <CardMedia
                     className={classes.media}
@@ -130,8 +135,17 @@ const PostDetail = props => {
         </CardActions>      
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <CardContent>
+        <form noValidate onSubmit={formik.handleSubmit}>
         <Typography variant="body2" color="textSecondary" component="p">
-          <TextareaAutosize aria-label="minimum height" className={classes.textArea}rowsMin={10} placeholder="Descreva suas habilidades e disponibilidade de horários" />
+          <TextareaAutosize 
+            aria-label="minimum height" 
+            className={classes.textArea}
+            rowsMin={10}
+            name="message" 
+            placeholder="Descreva suas habilidades e disponibilidade de horários"
+            value={formik.values.message}                  
+            onChange={formik.handleChange}                 
+            />
           </Typography>
           <Button
               type="submit"
@@ -141,19 +155,15 @@ const PostDetail = props => {
               className={classes.submit}
             >
               Enviar
-            </Button>            
+            </Button>
+            </form>            
         </CardContent>
       </Collapse>
             </Card> 
             </Box>       
-        </LoggedTemplate>
+        </GeneralTemplate>
 
     )
 };
 
 export default PostDetail;
-
-
-
-
-

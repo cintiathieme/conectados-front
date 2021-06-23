@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
 
   }));
 
-const FilterBar = () => {
+const SideBar = () => {
     const classes = useStyles();
 
   return (    
@@ -96,4 +96,4 @@ const FilterBar = () => {
 
 }
 
-export default FilterBar;
+export default SideBar;

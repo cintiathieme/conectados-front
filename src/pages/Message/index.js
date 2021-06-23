@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import apiService from '../../services/api.services';
 
-import LoggedTemplate from '../../components/templates/LoggedTemplate';
+import GeneralTemplate from '../../components/templates/GeneralTemplate';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -35,7 +35,8 @@ const Message = () => {
   
   const getMessages = async () => {
     try {
-      const messagesList = await apiService.getPosts();
+      const messagesList = await apiService.getMessages();
+      console.log(messagesList)
 
       setMessageList(messagesList);
     } catch(error) {
@@ -48,7 +49,7 @@ const Message = () => {
   }, []);    
     
   return (
-    <LoggedTemplate>
+    <GeneralTemplate>
       <div className={classes.root}> 
         <Paper className={classes.paper}>
           <TableContainer>
@@ -64,7 +65,7 @@ const Message = () => {
                   <TableRow hover key={message._id}>
                     <TableCell component="th" scope="row">
                   <Link to={`/messages/${message._id}`} style={{ textDecoration: 'none'}}>
-                      {message.job}
+                      {message.institutionName}
                   </Link>
                     </TableCell>
                     <TableCell align="right">{message.updatedAt}</TableCell>                    
@@ -75,7 +76,7 @@ const Message = () => {
           </TableContainer>
         </Paper>
       </div>
-    </LoggedTemplate>
+    </GeneralTemplate>
   )
 };
 

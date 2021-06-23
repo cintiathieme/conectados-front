@@ -15,8 +15,10 @@ const Signin = props => {
     try {
       const token = await apiServices.signinUser(values);
       localStorage.setItem('token', token);
+      // props.updateRole(role)
+      // localStorage.setItem('role', role)
 
-      props.history.push('/posts')
+      props.history.push('/')
             
     } catch (error) {
       if (error.response.data.message === 'Credenciais inválidas') {

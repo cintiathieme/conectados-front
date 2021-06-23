@@ -46,8 +46,7 @@ const NewPostForm = ({ handleCreatePost }) => {
         handleCreatePost(values);
       },
       validationSchema: formSchema,
-    });
-   
+    });   
 
     return (
       <Container component="main" maxWidth="xs">
@@ -76,8 +75,7 @@ const NewPostForm = ({ handleCreatePost }) => {
                   variant="outlined"                  
                   fullWidth
                   name="job"
-                  label="Vaga"
-                  type="job"
+                  label="Vaga"                  
                   id="job"
                   value={formik.values.job}
                   onChange={formik.handleChange}                  

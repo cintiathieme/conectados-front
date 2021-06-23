@@ -3,8 +3,8 @@ import apiServices from '../../services/api.services';
 
 import { Link } from 'react-router-dom';
 
-import LoggedTemplate from '../../components/templates/LoggedTemplate';
-import FilterBar from '../../components/organisms/FilterBar';
+import GeneralTemplate from '../../components/templates/GeneralTemplate';
+import SideBar from '../../components/organisms/SideBar';
 
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
@@ -56,11 +56,11 @@ const Posts = () => {
     }, []);   
     return (
         <>
-            <LoggedTemplate>
+            <GeneralTemplate>
                 
                 <Container maxWidth="lg">
                     <Box display="flex" justifyContent="center">
-                        <FilterBar />
+                        <SideBar />
                         <div>
     {posts.map(post => (    
     <Paper className={classes.paper} key={post._id}>
@@ -99,7 +99,7 @@ const Posts = () => {
     </div>
                     </Box>
                 </Container>
-            </LoggedTemplate>
+            </GeneralTemplate>
         </>
     )
 };
