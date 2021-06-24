@@ -20,8 +20,7 @@ class ApiService {
             config => config,
             error => {
                 if(error.response.status === 401 && error.response.data.type === 'Auth') {
-                    localStorage.removeItem('token');
-                    // localStorage.removeItem('role');
+                    localStorage.removeItem('token');                    
                     window.location.href='/signin';
                 }
                 return error;
@@ -46,6 +45,12 @@ class ApiService {
 
     createPost = async postData => {
         await this.api.post('/post/new-post', postData);
+    }
+
+    handleUpload = async imageFile => {
+        const { data } = await this.api.post('/upload', imageFile);
+
+        return data;
     }
 
     getPostDetail = async postId => {
@@ -115,6 +120,8 @@ class ApiService {
         localStorage.removeItem('token');
         window.location.href='/';
     }
+
+    
 }
 
 export default new ApiService();

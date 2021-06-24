@@ -1,5 +1,5 @@
 import React from 'react';
-import Footer from '../../molecules/Footer';
+import Footer from '../../atoms/Footer';
 
 import Avatar from '@material-ui/core/Avatar';
 import CssBaseline from '@material-ui/core/CssBaseline';

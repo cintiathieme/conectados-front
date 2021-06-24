@@ -3,9 +3,8 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 
-import Avatar from '@material-ui/core/Avatar';
+
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
@@ -13,10 +12,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
 import FormLabel from '@material-ui/core/FormLabel';
 import Grid from '@material-ui/core/Grid';
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 // import InputAdornment from '@material-ui/core/InputAdornment';
 // import IconButton from '@material-ui/core/IconButton';
 // import Visibility from '@material-ui/icons/Visibility';
@@ -80,7 +76,7 @@ const SignupForm = ({ handleCreateUser }) => {
                   variant="outlined"                  
                   fullWidth
                   id="name"
-                  label="Nome"
+                  label="Nome do voluntário ou Instituição"
                   value={formik.values.name}                  
                   onChange={formik.handleChange}                  
                   error={formik.touched.name && Boolean(formik.errors.name)}

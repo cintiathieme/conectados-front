@@ -104,7 +104,7 @@ const PostDetail = props => {
                 />
                 <CardMedia
                     className={classes.media}
-                    image={post.image}
+                    image={post.imageUrl}
                     title={post.institutionName}
                 />
                 <CardContent>

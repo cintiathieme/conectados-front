@@ -9,7 +9,7 @@ const NewPost = props => {
     const handleCreatePost = async values => {
         try {
           console.log(values);
-          await apiService.createPost(values);
+          await apiService.createPost(values);         
           
           props.history.push('/posts')
         } catch (error) {

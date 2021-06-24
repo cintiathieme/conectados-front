@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Footer from '../../molecules/Footer';
+import Footer from '../../atoms/Footer';
 
 import apiServices from '../../../services/api.services';
 

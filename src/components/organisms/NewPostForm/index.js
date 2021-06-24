@@ -1,6 +1,7 @@
 import React from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import apiServices from '../../../services/api.services';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -40,20 +41,34 @@ const formSchema = Yup.object().shape({
 
 const NewPostForm = ({ handleCreatePost }) => {
     const classes = useStyles();
+    
+    const [image, setImage] = React.useState();
+    
+    const handleFileUpload = e => {
+      const uploadData = new FormData();
 
+      uploadData.append('imageUrl', e.target.files[0]);
+      
+      apiServices.handleUpload(uploadData)
+        .then(response => {
+          setImage(response.secure_url)
+        })
+      }
+      console.log(image)
+      
     const formik = useFormik({
       initialValues: {
-        image: '',
+        imageUrl: '',
         description: '',
         job: '',
         type: ''           
       },
       onSubmit: values => {
-        handleCreatePost(values);
+        handleCreatePost(values)      
       },
       validationSchema: formSchema,
-    });   
-
+    });
+    
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -62,15 +77,15 @@ const NewPostForm = ({ handleCreatePost }) => {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField                  
-                  name="image"
+                  name="imageUrl"
                   variant="outlined"                  
                   fullWidth
-                  id="outilined-multiline-flexible"
+                  id="imageUrl"
                   label="Imagem"
                   type="file"
                   InputLabelProps={{ shrink: true }}
-                  value={formik.values.image}                  
-                  onChange={formik.handleChange}                  
+                  value={formik.values.imageUrl}                  
+                  onChange={e => handleFileUpload(e)}                  
                   error={formik.touched.image && Boolean(formik.errors.image)}
                   helperText={formik.touched.image && formik.errors.image}
                 />

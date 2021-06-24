@@ -1,6 +1,4 @@
 import React from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 
 import ModalEditPost from '../../components/organisms/ModalEditPost';
 import apiService from '../../services/api.services';
@@ -133,7 +131,7 @@ const MyPosts = props => {
                     <Card className={classes.card}>
                     <CardMedia
                         className={classes.cardMedia}
-                        image={post.image}
+                        image={post.imageUrl}
                         title={post.job}                        
                     />
                     <CardContent className={classes.cardContent}>
