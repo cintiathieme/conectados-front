@@ -105,8 +105,7 @@ class ApiService {
 
     signinUser = async userData => {
         const { data } = await this.api.post('/auth/signin', userData);
-        await console.log(data)
-
+        
         return data.message;
     }
 

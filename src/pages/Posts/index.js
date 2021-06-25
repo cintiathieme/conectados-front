@@ -43,7 +43,7 @@ const Posts = () => {
   const getUser = async () => {
     try {     
       const user = await apiServices.getUser();
-    
+      console.log(user)
       setUser(user);      
     } catch(error) {
       console.log(error)
@@ -59,7 +59,7 @@ const Posts = () => {
       {!apiServices.isAuthenticated() && <Header />}
       <Container className={classes.container} maxWidth="lg">
           <Box display="flex" justifyContent="center">
-          {user.type === 'institution' && <SideBar />}                     
+          {user.role === 'institution' && <SideBar />}                     
           <PostCard /> 
           </Box>
       </Container>

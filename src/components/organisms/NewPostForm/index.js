@@ -33,29 +33,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const formSchema = Yup.object().shape({
-    image: Yup.string().trim(),
+    imageUrl: Yup.string().trim(),
     description: Yup.string().required('Campo obrigatório'),
     job: Yup.string().required('Campo obrigatório'),
 });
 
 
 const NewPostForm = ({ handleCreatePost }) => {
-    const classes = useStyles();
-    
-    const [image, setImage] = React.useState();
-    
-    const handleFileUpload = e => {
-      const uploadData = new FormData();
-
-      uploadData.append('imageUrl', e.target.files[0]);
-      
-      apiServices.handleUpload(uploadData)
-        .then(response => {
-          setImage(response.secure_url)
-        })
-      }
-      console.log(image)
-      
+    const classes = useStyles();    
+       
     const formik = useFormik({
       initialValues: {
         imageUrl: '',
@@ -68,7 +54,20 @@ const NewPostForm = ({ handleCreatePost }) => {
       },
       validationSchema: formSchema,
     });
+    console.log(formik.values)
     
+    const handleFileUpload = e => {
+      const uploadData = new FormData();
+
+      uploadData.append('imageUrl', e.target.files[0]);
+      
+      apiServices.handleUpload(uploadData)
+        .then(response => {
+          formik.setFieldValue('imageUrl', response.secure_url)
+          console.log(response.secure_url)
+        })
+      }
+
     return (
       <Container component="main" maxWidth="xs">
         <CssBaseline />
@@ -83,8 +82,7 @@ const NewPostForm = ({ handleCreatePost }) => {
                   id="imageUrl"
                   label="Imagem"
                   type="file"
-                  InputLabelProps={{ shrink: true }}
-                  value={formik.values.imageUrl}                  
+                  InputLabelProps={{ shrink: true }}                                   
                   onChange={e => handleFileUpload(e)}                  
                   error={formik.touched.image && Boolean(formik.errors.image)}
                   helperText={formik.touched.image && formik.errors.image}
