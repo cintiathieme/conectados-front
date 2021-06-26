@@ -88,7 +88,15 @@ const Home = () => {
                           <Typography variant="body2" color="textSecondary">
                             {post.description}
                           </Typography>
-                        </Grid>                        
+                        </Grid>
+                        <Grid item>
+                        <Typography variant="body2" color="textSecondary">
+                          {post.date}
+                        </Typography>
+                        <Link  to={`/posts/${post._id}`} className={classes.link}>
+                          Saiba mais
+                        </Link>
+                        </Grid>
                       </Grid>                      
                     </Grid>
                   </Grid>

@@ -113,6 +113,7 @@ const MessageDetails = props => {
                         <Box display="flex" style={{justifyContent: user === m.author ? 'flex-end' : 'flex-start'}}>
                             <Paper key={m._id} elevation={3} className={classes.paper} style={{backgroundColor: user === m.author ? '#DCF8C6' : '#FFF'}}>
                                 <Typography >{m.message}</Typography>
+                                <Typography variant="body2" color="textSecondary" >{m.date}</Typography>
                             </Paper>
                         </Box>))}
                     </Typography>

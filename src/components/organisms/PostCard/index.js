@@ -77,6 +77,9 @@ const PostCard = () => {
                 </Typography>
               </Grid>
               <Grid item>
+              <Typography variant="body2" color="textSecondary">
+                  {post.date}
+                </Typography>
               <Link to={`/posts/${post._id}`} className={classes.link}>
                 Saiba mais
               </Link>
