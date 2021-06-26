@@ -7,8 +7,7 @@ import NewPostForm from '../../components/organisms/NewPostForm';
 
 const NewPost = props => {
     const handleCreatePost = async values => {
-        try {
-          console.log(values);
+        try {         
           await apiService.createPost(values);         
           
           props.history.push('/posts')

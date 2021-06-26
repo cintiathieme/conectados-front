@@ -88,12 +88,7 @@ const Home = () => {
                           <Typography variant="body2" color="textSecondary">
                             {post.description}
                           </Typography>
-                        </Grid>
-                        <Grid item>
-                        <Link  to={`/posts/${post._id}`} className={classes.link}>
-                          Saiba mais
-                        </Link>
-                        </Grid>
+                        </Grid>                        
                       </Grid>                      
                     </Grid>
                   </Grid>
